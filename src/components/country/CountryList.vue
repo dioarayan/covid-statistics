@@ -11,22 +11,26 @@
     <h4>Countries Affected</h4>
     <div v-if="!isSearched">
       <ul v-for="country of allCountries">
-        <li>{{ country }}</li>
+        <country-item></country-item>
       </ul>
     </div>
-    <div v-else>
+    <!-- <div v-else>
       <ul v-for="result of searchedResult">
         <li>{{ result }}</li>
       </ul>
-    </div>
+    </div> -->
   </section>
 </template>
 
 <script>
 import axios from 'axios';
 import { ref, onMounted } from 'vue';
+import CountryItem from './CountryItem.vue';
 
 export default {
+  components: {
+    CountryItem,
+  },
   setup() {
     const inputCountry = ref('');
     const searchedResult = ref('');

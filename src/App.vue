@@ -1,14 +1,23 @@
 <template>
-  <h1>Covid 19 Statistics</h1>
-  <country-list></country-list>
+  <div class="common-layout">
+    <el-container>
+      <base-header> </base-header>
+    </el-container>
+    <el-container>
+      <base-main></base-main>
+    </el-container>
+  </div>
 </template>
 
 <script>
-import CountryList from './components/country/CountryList.vue';
+import BaseHeader from './components/layouts/BaseHeader.vue';
+import BaseMain from './components/layouts/BaseMain.vue';
+// import CountryList from './components/country/CountryList.vue';
 
 export default {
   components: {
-    CountryList,
+    BaseMain,
+    BaseHeader,
   },
 };
 </script>
