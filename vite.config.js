@@ -1,5 +1,7 @@
 import { defineConfig } from 'vite';
 import vue from '@vitejs/plugin-vue';
+import Icons from 'unplugin-icons/vite';
+import IconsResolver from 'unplugin-icons/resolver';
 
 // vite.config.ts
 import AutoImport from 'unplugin-auto-import/vite';
@@ -14,8 +16,9 @@ export default defineConfig({
       resolvers: [ElementPlusResolver()],
     }),
     Components({
-      resolvers: [ElementPlusResolver()],
+      resolvers: [ElementPlusResolver(), IconsResolver()],
     }),
+    Icons(),
   ],
 });
 

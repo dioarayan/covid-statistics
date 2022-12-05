@@ -11,9 +11,7 @@ export default {
   props: ['country'],
 
   setup(props) {
-    const countryName = computed(function () {
-      return props.country;
-    });
+    const countryName = props.country;
 
     return { countryName };
   },
