@@ -16,7 +16,7 @@ import { Search } from '@element-plus/icons-vue';
 
 export default {
   setup() {
-    const searchItem = ref('');
+    const searchItem = ref(null);
 
     return { searchItem, Search };
   },

@@ -15,6 +15,11 @@
         <template #title> Statistics </template>
       </el-menu-item>
     </router-link>
+    <router-link to="/statistics">
+      <el-menu-item index="2">
+        <template #title> Analytics </template>
+      </el-menu-item>
+    </router-link>
   </el-menu>
 </template>
 

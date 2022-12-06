@@ -1,11 +1,10 @@
 <template>
   <div class="common-layout">
-    <el-container>
-      <el-aside style="height: 100vh">
+    <el-container class="relative">
+      <el-aside class="fixed">
         <base-side></base-side>
       </el-aside>
-
-      <el-container vertical>
+      <el-container>
         <el-header>
           <base-header></base-header>
         </el-header>

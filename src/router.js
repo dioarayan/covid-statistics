@@ -1,9 +1,9 @@
 import { createRouter, createWebHistory } from 'vue-router';
 
-import CountryList from './components/pages/CountryList.vue';
-import CountryStatistics from './components/pages/CountryStatistics.vue';
-import CountryHistory from './components/pages/CountryHistory.vue';
-import MyDashboard from './components/pages/MyDashboard.vue';
+import CountryList from './pages/CountryList.vue';
+import CountryStatistics from './pages/CountryStatistics.vue';
+import CountryHistory from './pages/CountryHistory.vue';
+import MyDashboard from './pages/MyDashboard.vue';
 
 const router = createRouter({
   history: createWebHistory(),
