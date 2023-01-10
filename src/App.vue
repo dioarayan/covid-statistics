@@ -1,45 +1,36 @@
 <template>
-  <div class="common-layout">
-    <el-container class="relative">
-      <el-aside class="fixed">
-        <base-side></base-side>
-      </el-aside>
-      <el-container>
-        <el-header>
-          <base-header></base-header>
-        </el-header>
-        <el-main>
-          <base-main></base-main>
-        </el-main>
-      </el-container>
-    </el-container>
-  </div>
+  <el-container>
+    <el-aside class="bg-slate-600 h-screen opacity-75 fixed">
+      <the-aside></the-aside>
+    </el-aside>
+    <el-main>
+      <the-main class="relative"></the-main>
+    </el-main>
+  </el-container>
 </template>
 
 <script>
-import BaseHeader from './components/layouts/BaseHeader.vue';
-import BaseSide from './components/layouts/BaseSide.vue';
-import BaseMain from './components/layouts/BaseMain.vue';
-// import CountryList from './components/country/CountryList.vue';
+import TheAside from './components/layouts/TheAside.vue';
+import TheMain from './components/layouts/TheMain.vue';
+// import useFetchData from './composables/fetch.js';
 
 export default {
   components: {
-    BaseHeader,
-    BaseMain,
-    BaseSide,
+    TheAside,
+    TheMain,
   },
+
+  // setup() {
+  //   const { isLoaded } = useFetchData();
+
+  //   return { isLoaded };
+  // },
 };
 </script>
 
 <style>
-.el-aside {
+.screenHeight {
   height: 100vh;
-  background-color: #6c6e72;
-}
-
-.el-header {
-  text-align: right;
-  background-color: #262727;
 }
 </style>
 

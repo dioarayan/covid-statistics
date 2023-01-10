@@ -7,6 +7,14 @@ body {
   height: 100%;
 }
 
+html {
+  background: url('../images/world_map.png') no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+
 body {
   margin: 0;
 }
