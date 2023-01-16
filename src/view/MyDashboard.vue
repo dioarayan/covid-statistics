@@ -56,7 +56,7 @@
 </template>
 
 <script>
-import { ref, reactive, onMounted } from 'vue';
+import { ref, reactive } from 'vue';
 import axios from 'axios';
 export default {
   setup() {
@@ -82,30 +82,6 @@ export default {
       details.testsTotal = data.response[0].tests.total;
       // console.log(details.caseNew);
     }
-
-    onMounted(() => {
-      const options = {
-        method: 'GET',
-        url: 'https://covid-193.p.rapidapi.com/statistics',
-        params: { country: 'Philippines' },
-        headers: {
-          'X-RapidAPI-Key': '57b8ce9aedmsh22fe9b1780b95f8p1a76d1jsn23bc3457d222',
-          'X-RapidAPI-Host': 'covid-193.p.rapidapi.com',
-        },
-      };
-
-      axios
-        .request(options)
-        .then(function (response) {
-          result.value = response.data;
-          // console.log(result.value);
-
-          populateDetails(result.value);
-        })
-        .catch(function (error) {
-          console.error(error);
-        });
-    });
 
     return { details, result, populateDetails };
   },

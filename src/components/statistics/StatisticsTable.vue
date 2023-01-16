@@ -1,4 +1,18 @@
 <template>
+  <div class="flex flex-row">
+    <div class="basis-3/4">
+      <span class="italic text-slate-400/50 inline-block align-bottom">As of {{ timeUpdate }}</span>
+    </div>
+    <div class="basis-1/4">
+      <el-input
+        v-model="inputSearch"
+        class="w-60 m-2"
+        size="large"
+        placeholder="Search Country"
+        @keyup="performSearch"
+        :suffix-icon="Search" />
+    </div>
+  </div>
   <el-table
     :data="countryList"
     class="table-auto border-spacing-1 w-full">
@@ -27,7 +41,7 @@
               <template #header>
                 <h2>Cases</h2>
               </template>
-              <div class="mt-2">
+              <div class="flex flex-col mt-2">
                 <div class="w-full">
                   <p class="float-left">Active Cases:</p>
                   <p class="text-right">{{ props.row.cases.active }}</p>
@@ -54,9 +68,15 @@
               <template #header>
                 <h2>Deaths</h2>
               </template>
-              <div class="mt-2">
-                <p>New Deaths: {{ props.row.deaths.new }}</p>
-                <p>Total Deaths: {{ props.row.deaths.total }}</p>
+              <div class="flex flex-col mt-2">
+                <div class="w-full">
+                  <p class="float-left">New Deaths:</p>
+                  <p class="text-right">{{ props.row.deaths.new }}</p>
+                </div>
+                <div class="w-full">
+                  <p class="float-left">Total Deaths:</p>
+                  <p class="text-right">{{ props.row.deaths.total }}</p>
+                </div>
               </div>
             </base-card>
           </div>
@@ -67,9 +87,15 @@
               <template #header>
                 <h2>Tests</h2>
               </template>
-              <div class="mt-2">
-                <p>New Tests: {{ props.row.tests.new }}</p>
-                <p>Total Tests: {{ props.row.tests.total }}</p>
+              <div class="flex flex-col mt-2">
+                <div class="w-full">
+                  <p class="float-left">New Deaths:</p>
+                  <p class="text-right">{{ props.row.tests.new }}</p>
+                </div>
+                <div class="w-full">
+                  <p class="float-left">Total Deaths:</p>
+                  <p class="text-right">{{ props.row.tests.total }}</p>
+                </div>
               </div>
             </base-card>
           </div>
@@ -97,80 +123,56 @@
 
 <script>
 import { ref, computed } from 'vue';
+import { Search, Loading } from '@element-plus/icons-vue';
 
 export default {
+  components: { Loading },
   props: {
     allResult: {
       type: Array,
     },
-    searchResult: {
-      type: Array,
-    },
-    isSearching: {
-      type: Boolean,
-      required: true,
-    },
   },
   setup(props) {
-    const statResult = ref(null);
-    // const chartData = reactive({
-    //   labels: ['Cases', 'Deaths', 'Tests'],
-    //   datasets: [
-    //     {
-    //       backgroundColor: ['#0891B2', '#E11D48', '#059669'],
-    //       data: [2, 6, 3],
-    //     },
-    //   ],
-    // });
-    // const chartOptions = reactive({
-    //   responsive: true,
-    // });
-    // const convertStatsData = function () {
-    //   return {
-    //     labels: ['Cases', 'Deaths', 'Tests'],
-    //     datasets: [
-    //       {
-    //         data: [40, 20, 12],
-    //       },
-    //     ],
-    //   };
-    // };
+    const searchResult = ref(null);
+    const inputSearch = ref('');
+    const isSearching = ref(false);
+
+    const timeUpdate = computed(function () {
+      const dateTime = Date.parse(allResults.value[0].time);
+      return new Date(dateTime);
+    });
 
     const allResults = computed(function () {
       return props.allResult;
     });
 
-    const searchResults = computed(function () {
-      return props.searchResult;
-    });
-
     const countryList = computed(function () {
-      if (props.isSearching === false) {
+      if (isSearching.value === false) {
         return allResults.value;
-      } else if (props.isSearching === true) {
-        return searchResults.value;
+      } else if (isSearching.value === true) {
+        return searchResult.value;
       }
     });
 
-    // const statData = computed(function () {
-    //   for (let i = 0; i <= statResult.value.length; i++) {
-    //     return Object.values(statResult.value[i]);
-    //   }
-    // });
+    function performSearch() {
+      isSearching.value = true;
+      let response = allResults.value;
+      searchResult.value = search(response, inputSearch.value);
+    }
 
-    // onMounted(() => {
-    // statResult.value = countryList.value.map((results) => {
-    //   const container = {};
-    //   container.casesTotal = results.cases.total;
-    //   container.deathsTotal = results.deaths.total;
-    //   container.testsTotal = results.tests.total;
+    function search(myArray, searchKey) {
+      let arrayResult = [];
+      let searchItem = searchKey.toUpperCase();
+      for (let i = 0; i < myArray.length; i++) {
+        let item = myArray[i].country.toUpperCase();
+        if (item === searchItem || item.includes(searchItem)) {
+          arrayResult.push(myArray[i]);
+        }
+      }
+      return arrayResult;
+    }
 
-    //   return container;
-    // });
-    // console.log(statResult.value);
-    // });
-
-    return { countryList };
+    return { countryList, timeUpdate, isSearching, inputSearch, performSearch, searchResult, Search, Loading };
   },
 };
 </script>

@@ -1,10 +1,11 @@
 import { ref } from 'vue';
 import axios from 'axios';
 
-export default function useFetchData() {
+export default function useFetchData(stateA, stateB) {
   const allResult = ref(null);
-  const isLoaded = ref(false);
-  const length = ref(null);
+  const loadingState = ref(stateA);
+  const loadedState = ref(stateB);
+  const errorState = ref(null);
 
   const options = {
     method: 'GET',
@@ -18,18 +19,23 @@ export default function useFetchData() {
   axios
     .request(options)
     .then(function (response) {
+      console.log('isLoading' + loadingState.value);
       if (response) {
         allResult.value = response.data.response;
-        isLoaded.value = true;
-        length.value = allResult.value.length;
-        // console.log(length.value);
-        console.log(allResult.value[0]);
+        loadedState.value = true;
+        loadingState.value = false;
+        console.log('isLoading' + loadingState.value);
+        // console.log(isLoaded.value);
       }
     })
     .catch(function (error) {
+      loadedState.value = false;
+      loadingState.value = false;
+      console.log(loadedState.value);
       console.error(error);
+      errorState.value = error;
     });
 
-  return { allResult, isLoaded, length };
+  return { allResult, loadedState, loadingState, errorState };
 }
 

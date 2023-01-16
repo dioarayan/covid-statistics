@@ -11,32 +11,32 @@
 </template>
 
 <script>
-import { ref, onMounted } from 'vue';
+import { ref } from 'vue';
 import axios from 'axios';
 
 export default {
   setup() {
     const allCountries = ref(null);
 
-    onMounted(() => {
-      const options = {
-        method: 'GET',
-        url: 'https://covid-193.p.rapidapi.com/countries',
-        headers: {
-          'X-RapidAPI-Key': '57b8ce9aedmsh22fe9b1780b95f8p1a76d1jsn23bc3457d222',
-          'X-RapidAPI-Host': 'covid-193.p.rapidapi.com',
-        },
-      };
+    // onMounted(() => {
+    //   const options = {
+    //     method: 'GET',
+    //     url: 'https://covid-193.p.rapidapi.com/countries',
+    //     headers: {
+    //       'X-RapidAPI-Key': '57b8ce9aedmsh22fe9b1780b95f8p1a76d1jsn23bc3457d222',
+    //       'X-RapidAPI-Host': 'covid-193.p.rapidapi.com',
+    //     },
+    //   };
 
-      axios
-        .request(options)
-        .then(function (response) {
-          allCountries.value = response.data.response;
-        })
-        .catch(function (error) {
-          console.error(error);
-        });
-    });
+    //   axios
+    //     .request(options)
+    //     .then(function (response) {
+    //       allCountries.value = response.data.response;
+    //     })
+    //     .catch(function (error) {
+    //       console.error(error);
+    //     });
+    // });
 
     return { allCountries };
   },
