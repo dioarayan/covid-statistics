@@ -89,11 +89,11 @@
               </template>
               <div class="flex flex-col mt-2">
                 <div class="w-full">
-                  <p class="float-left">New Deaths:</p>
+                  <p class="float-left">New Tests:</p>
                   <p class="text-right">{{ props.row.tests.new }}</p>
                 </div>
                 <div class="w-full">
-                  <p class="float-left">Total Deaths:</p>
+                  <p class="float-left">Total Tests:</p>
                   <p class="text-right">{{ props.row.tests.total }}</p>
                 </div>
               </div>

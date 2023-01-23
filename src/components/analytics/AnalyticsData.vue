@@ -1,50 +1,66 @@
 <template>
-  <Bar
-    :data="allCountryStats"
-    :options="chartOptions" />
-  <h2>{{ allResult }}</h2>
+  <div class="flex flex-row">
+    <div class="basis-1/3">
+      <p>{{ result }}</p>
+    </div>
+  </div>
+  <!-- <LineChart /> -->
 </template>
 
 <script>
-// import PieChart from '../analytics/';
-import { ref, reactive, computed } from 'vue';
-import { Bar } from 'vue-chartjs';
-import { Chart as ChartJS, BarElement, Tooltip, Legend, Title, CategoryScale, LinearScale } from 'chart.js';
-
-ChartJS.register(BarElement, Tooltip, Legend, Title, CategoryScale, LinearScale);
+// import LineChart from '../analytics/chart/LineChart.vue';
+import useFetchHistory from '../../composables/fetchHistory.js';
+// import { ref } from 'vue';
 
 export default {
-  components: { Bar },
-  props: ['allResult'],
+  // components: { LineChart },
+  props: {
+    country: {
+      type: String,
+      required: true,
+    },
+    datePicked: {
+      type: Date,
+      required: true,
+    },
+  },
   setup(props) {
-    const results = ref(props.allResult);
-    const chartOptions = reactive({
-      responsive: true,
-    });
+    // const chartOptions = reactive({
+    //   responsive: true,
+    // });
 
-    const allCountryStats = computed(function () {
-      const chartData = {
-        labels: ['Cases', 'Deaths', 'Tests'],
-        datasets: [
-          {
-            backgroundColor: ['#41B883', '#E46651', '#00D8FF'],
-            data: fetchData.value,
-          },
-        ],
-      };
-      return chartData;
-    });
+    // const allCountryStats = computed(function () {
+    //   const chartData = {
+    //     labels: ['Cases', 'Deaths', 'Tests'],
+    //     datasets: [
+    //       {
+    //         backgroundColor: ['#41B883', '#E46651', '#00D8FF'],
+    //         data: fetchData.value,
+    //       },
+    //     ],
+    //   };
+    //   return chartData;
+    // });
 
-    const fetchData = computed(function () {
-      const newArray = [];
-      // for(let i = 0 )
-      newArray[0] = results.value.cases.total;
-      newArray[1] = results.value.deaths.total;
-      newArray[2] = results.value.tests.total;
-      return newArray;
-    });
+    // const fetchData = computed(function () {
+    //   const newArray = [];
+    //   // for(let i = 0 )
+    //   newArray[0] = results.value.cases.total;
+    //   newArray[1] = results.value.deaths.total;
+    //   newArray[2] = results.value.tests.total;
+    //   return newArray;
+    // });
 
-    return { allCountryStats, chartOptions };
+    // const statPerMonth = results.value.filter((e) => {
+    //   const fetchedDate = new Date(Date.parse(e.time));
+    //   const date = fetchedDate.getDate();
+    //   const year = fetchedDate.getFullYear();
+    //   return date === 15 && year === 2022;
+    // });
+
+    const { result, isLoaded } = useFetchHistory(props.country, props.date);
+
+    return { result };
   },
 };
 </script>

@@ -2,7 +2,11 @@
   <h1 class="text-3xl">Statistics</h1>
   <base-message v-if="loadingState && !loadedState">
     <template #icon>
-      <Loading />
+      <base-icon
+        size="50"
+        class="is-loading">
+        <Loading />
+      </base-icon>
     </template>
     <template #message>
       <span>Fetching data...</span>
@@ -12,25 +16,31 @@
   <div v-else-if="loadedState && !loadingState">
     <statistics-table :all-result="allResult"></statistics-table>
   </div>
-  <div
-    v-else-if="!loadedState && !loadingState"
-    class="w-1/2 h-1/2 m-auto py-40">
-    <h1 class="font-light italic text-slate-400/50 text-center">{{ errorState.message }}</h1>
-    <h1 class="font-light italic text-slate-400/50 text-center">Sorry, try again later</h1>
-  </div>
-  <el-backtop
+  <base-message v-else-if="!loadedState && !loadingState">
+    <template #icon>
+      <base-icon size="50">
+        <WarningFilled />
+      </base-icon>
+    </template>
+    <template #message>
+      <span>{{ errorState.message }}</span
+      ><br />
+      <span>Sorry, try again later</span>
+    </template>
+  </base-message>
+  <!-- <el-backtop
     :right="100"
-    :bottom="100" />
+    :bottom="100" /> -->
 </template>
 
 <script>
 import StatisticsTable from '../components/statistics/StatisticsTable.vue';
-import { Loading } from '@element-plus/icons-vue';
-import useFetchData from '../composables/fetch.js';
+import { Loading, WarningFilled } from '@element-plus/icons-vue';
+import useFetchData from '../composables/fetchStatistics.js';
 import { ref } from 'vue';
 
 export default {
-  components: { StatisticsTable, Loading },
+  components: { StatisticsTable, Loading, WarningFilled },
 
   setup() {
     const load_spinner = ref(true);
@@ -44,6 +54,7 @@ export default {
       loadingState,
       errorState,
       Loading,
+      WarningFilled,
     };
   },
 };

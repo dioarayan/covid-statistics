@@ -1,12 +1,10 @@
 <template>
-  <el-icon
-    :size="size"
-    :class="class">
+  <el-icon>
     <slot></slot>
   </el-icon>
 </template>
 
-<script>
+<!-- <script>
 export default {
   props: {
     size: {
@@ -19,5 +17,5 @@ export default {
     },
   },
 };
-</script>
+</script> -->
 

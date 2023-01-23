@@ -1,16 +1,25 @@
 <template>
-  <Pie :data="statDetails" />
+  <Line :data="statDetails" />
 </template>
 
 <script>
-import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
-import { Pie } from 'vue-chartjs';
+import { Line } from 'vue-chartjs';
+import {
+  Chart as ChartJS,
+  Title,
+  Tooltip,
+  Legend,
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+} from 'chart.js';
 
-ChartJS.register(ArcElement, Tooltip, Legend);
+ChartJS.register(Title, Tooltip, Legend, CategoryScale, LinearScale, PointElement, LineElement);
 
 export default {
   name: 'PieChart',
-  components: { Pie },
+  components: { Line },
   setup() {
     //   const statDetails = computed(function () {
     //     const chartData = {
@@ -29,3 +38,4 @@ export default {
   },
 };
 </script>
+
