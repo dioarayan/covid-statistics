@@ -4,16 +4,16 @@
       <p>{{ result }}</p>
     </div>
   </div>
-  <!-- <LineChart /> -->
+  <LineChart :result="result" :result-length="resultLength" />
 </template>
 
 <script>
-// import LineChart from '../analytics/chart/LineChart.vue';
-import useFetchHistory from '../../composables/fetchHistory.js';
+import LineChart from "../analytics/chart/LineChart.vue";
+import useFetchHistory from "../../composables/fetchHistory.js";
 // import { ref } from 'vue';
 
 export default {
-  // components: { LineChart },
+  components: { LineChart },
   props: {
     country: {
       type: String,
@@ -25,6 +25,13 @@ export default {
     },
   },
   setup(props) {
+    const newDate = new Date([props.datePicked]);
+    const dateString = new Date(
+      newDate.getTime() - newDate.getTimezoneOffset() * 60000
+    )
+      .toISOString()
+      .split("T")[0];
+
     // const chartOptions = reactive({
     //   responsive: true,
     // });
@@ -42,15 +49,6 @@ export default {
     //   return chartData;
     // });
 
-    // const fetchData = computed(function () {
-    //   const newArray = [];
-    //   // for(let i = 0 )
-    //   newArray[0] = results.value.cases.total;
-    //   newArray[1] = results.value.deaths.total;
-    //   newArray[2] = results.value.tests.total;
-    //   return newArray;
-    // });
-
     // const statPerMonth = results.value.filter((e) => {
     //   const fetchedDate = new Date(Date.parse(e.time));
     //   const date = fetchedDate.getDate();
@@ -58,10 +56,9 @@ export default {
     //   return date === 15 && year === 2022;
     // });
 
-    const { result, isLoaded } = useFetchHistory(props.country, props.date);
+    const { result, resultLength } = useFetchHistory(props.country, dateString);
 
-    return { result };
+    return { result, resultLength };
   },
 };
 </script>
-

@@ -1,20 +1,18 @@
-import { ref } from 'vue';
-import axios from 'axios';
+import { ref } from "vue";
+import axios from "axios";
 
 export default function useFetchHistory(country, date) {
   const result = ref(null);
+  const resultLength = ref("");
   const isLoaded = ref(false);
-  const newDate = new Date(date.toISOString().split('T')[0]);
-
-  // const parsedDate = ref(date.toJSON());
 
   const options = {
-    method: 'GET',
-    url: 'https://covid-193.p.rapidapi.com/history',
-    params: { country: country, day: newDate },
+    method: "GET",
+    url: "https://covid-193.p.rapidapi.com/history",
+    params: { country: country, day: date },
     headers: {
-      'X-RapidAPI-Key': '57b8ce9aedmsh22fe9b1780b95f8p1a76d1jsn23bc3457d222',
-      'X-RapidAPI-Host': 'covid-193.p.rapidapi.com',
+      "X-RapidAPI-Key": "57b8ce9aedmsh22fe9b1780b95f8p1a76d1jsn23bc3457d222",
+      "X-RapidAPI-Host": "covid-193.p.rapidapi.com",
     },
   };
 
@@ -23,8 +21,9 @@ export default function useFetchHistory(country, date) {
     .then(function (response) {
       if (response) {
         result.value = response.data.response;
+        resultLength.value = response.data.results;
         isLoaded.value = true;
-        // console.log(length.value);
+        console.log(resultLength.value);
         console.log(result.value);
       }
     })
@@ -42,6 +41,5 @@ export default function useFetchHistory(country, date) {
   //   return newArray;
   // }
 
-  return { result, isLoaded };
+  return { result, resultLength, isLoaded };
 }
-
