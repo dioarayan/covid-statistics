@@ -6,41 +6,45 @@
         <el-select
           v-model="country"
           class="m-2"
-          placeholder="Select Country">
-          <el-option
-            v-for="country in countries"
-            :value="country"
-            >{{ country }}</el-option
-          >
+          filterable
+          placeholder="Select Country"
+        >
+          <el-option v-for="country in countries" :value="country">{{
+            country
+          }}</el-option>
         </el-select>
         <el-date-picker
           v-model="datePicked"
           type="date"
-          placeholder="Pick a day" />
-        <base-button>
-          <el-button @click="goButton">Go!</el-button>
-        </base-button>
+          placeholder="Pick a day"
+        />
+        <base-button @click="goButton"> Go! </base-button>
       </el-form>
     </div>
-
-    <AnalyticsData
-      v-if="loadAnalytics"
-      :country="country"
-      :date-picked="datePicked" />
+    <div class="flex flex-col justify-center items-center">
+      <AnalyticsData
+        v-if="loadAnalytics"
+        :country="country"
+        :date-picked="datePicked"
+      />
+      <div v-else>
+        <h1>Start searching</h1>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
-import { ref } from 'vue';
-import useFetchCountry from '../composables/fetchCountry.js';
+import { ref } from "vue";
+import useFetchCountry from "../composables/fetchCountry.js";
 
 // import AnalyticsData from '../components/analytics/AnalyticsData.vue';
 // import useFetchData from '../composables/fetch.js';
 
 export default {
   setup() {
-    const datePicked = ref('');
-    const country = ref('');
+    const datePicked = ref("");
+    const country = ref("");
     const loadAnalytics = ref(false);
     // const data = reactive({
     //   labels: ['January', 'February', 'March', 'June'],
@@ -65,4 +69,3 @@ export default {
   },
 };
 </script>
-

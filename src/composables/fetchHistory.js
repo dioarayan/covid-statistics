@@ -3,9 +3,8 @@ import axios from 'axios';
 
 export default function useFetchHistory(country, date) {
   const result = ref(null);
+  const resultLength = ref('');
   const isLoaded = ref(false);
-
-  // const parsedDate = ref(date.toJSON());
 
   const options = {
     method: 'GET',
@@ -22,8 +21,9 @@ export default function useFetchHistory(country, date) {
     .then(function (response) {
       if (response) {
         result.value = response.data.response;
+        resultLength.value = response.data.results;
         isLoaded.value = true;
-        // console.log(length.value);
+        console.log(resultLength.value);
         console.log(result.value);
       }
     })
@@ -41,6 +41,6 @@ export default function useFetchHistory(country, date) {
   //   return newArray;
   // }
 
-  return { result, isLoaded };
+  return { result, resultLength, isLoaded };
 }
 
