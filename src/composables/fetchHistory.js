@@ -4,14 +4,13 @@ import axios from 'axios';
 export default function useFetchHistory(country, date) {
   const result = ref(null);
   const isLoaded = ref(false);
-  const newDate = new Date(date.toISOString().split('T')[0]);
 
   // const parsedDate = ref(date.toJSON());
 
   const options = {
     method: 'GET',
     url: 'https://covid-193.p.rapidapi.com/history',
-    params: { country: country, day: newDate },
+    params: { country: country, day: date },
     headers: {
       'X-RapidAPI-Key': '57b8ce9aedmsh22fe9b1780b95f8p1a76d1jsn23bc3457d222',
       'X-RapidAPI-Host': 'covid-193.p.rapidapi.com',
