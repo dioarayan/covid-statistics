@@ -23,8 +23,6 @@ export default function useFetchHistory(country, date) {
         result.value = response.data.response;
         resultLength.value = response.data.results;
         isLoaded.value = true;
-        console.log(resultLength.value);
-        console.log(result.value);
       }
     })
     .catch(function (error) {

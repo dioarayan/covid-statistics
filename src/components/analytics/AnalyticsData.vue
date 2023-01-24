@@ -1,18 +1,18 @@
 <template>
-  <div class="flex flex-row">
-    <div class="basis-1/3">
+  <div class="flex flex-col">
+    <div>
       <p>{{ result }}</p>
     </div>
+    <LineChart
+      :result="result"
+      :result-length="resultLength" />
   </div>
-  <LineChart
-    :result="result"
-    :result-length="resultLength" />
 </template>
 
 <script>
 import LineChart from '../analytics/chart/LineChart.vue';
 import useFetchHistory from '../../composables/fetchHistory.js';
-import { ref } from 'vue';
+import { ref, watch } from 'vue';
 
 export default {
   components: { LineChart },
@@ -27,24 +27,12 @@ export default {
     },
   },
   setup(props) {
+    const country = ref(props.country);
     const newDate = new Date([props.datePicked]);
     const dateString = new Date(newDate.getTime() - newDate.getTimezoneOffset() * 60000).toISOString().split('T')[0];
 
     // const chartOptions = reactive({
     //   responsive: true,
-    // });
-
-    // const allCountryStats = computed(function () {
-    //   const chartData = {
-    //     labels: ['Cases', 'Deaths', 'Tests'],
-    //     datasets: [
-    //       {
-    //         backgroundColor: ['#41B883', '#E46651', '#00D8FF'],
-    //         data: fetchData.value,
-    //       },
-    //     ],
-    //   };
-    //   return chartData;
     // });
 
     // const statPerMonth = results.value.filter((e) => {
@@ -54,7 +42,7 @@ export default {
     //   return date === 15 && year === 2022;
     // });
 
-    const { result, resultLength } = useFetchHistory(props.country, dateString);
+    const { result, resultLength } = useFetchHistory(country.value, dateString);
 
     return { result, resultLength };
   },

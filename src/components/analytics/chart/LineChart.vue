@@ -3,12 +3,14 @@
     <p>{{ totalCases }}</p>
     <p>{{ labelsCases }}</p>
   </div> -->
-  <Line :data="statDetails" :options="chartOptions" />
+  <Line
+    :data="statDetails"
+    :options="chartOptions" />
 </template>
 
 <script>
-import { computed } from "vue";
-import { Line } from "vue-chartjs";
+import { computed } from 'vue';
+import { Line } from 'vue-chartjs';
 import {
   Chart as ChartJS,
   Title,
@@ -18,20 +20,12 @@ import {
   LinearScale,
   PointElement,
   LineElement,
-} from "chart.js";
+} from 'chart.js';
 
-ChartJS.register(
-  Title,
-  Tooltip,
-  Legend,
-  CategoryScale,
-  LinearScale,
-  PointElement,
-  LineElement
-);
+ChartJS.register(Title, Tooltip, Legend, CategoryScale, LinearScale, PointElement, LineElement);
 
 export default {
-  name: "LineChart",
+  name: 'LineChart',
   components: { Line },
   props: {
     result: {
@@ -55,9 +49,7 @@ export default {
     const labelsCases = computed(function () {
       const labelsArray = [];
       for (let i = 0; i < props.resultLength; i++) {
-        labelsArray[i] = new Date(
-          Date.parse(props.result[i].time)
-        ).toLocaleTimeString();
+        labelsArray[i] = new Date(Date.parse(props.result[i].time)).toLocaleTimeString();
       }
       return labelsArray;
     });
@@ -65,13 +57,13 @@ export default {
     const statDetails = computed(function () {
       const chartData = {
         labels: labelsCases.value,
-        borderColor: "white",
+        borderColor: 'white',
         datasets: [
           {
             // backgroundColor: ["#41B883", "#E46651", "#00D8FF"],
             data: totalCases.value,
-            borderColor: "#fff",
-            borderWidth: "3",
+            borderColor: '#fff',
+            borderWidth: '3',
           },
         ],
       };
@@ -81,7 +73,7 @@ export default {
     const chartOptions = {
       responsive: true,
       chartArea: {
-        backgroundColor: "rgba(251, 85, 85, 0.4)",
+        backgroundColor: 'rgba(251, 85, 85, 0.4)',
       },
     };
 
@@ -97,3 +89,4 @@ export default {
   },
 };
 </script>
+
