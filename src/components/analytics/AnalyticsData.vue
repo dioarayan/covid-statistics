@@ -10,7 +10,7 @@
 <script>
 // import LineChart from '../analytics/chart/LineChart.vue';
 import useFetchHistory from '../../composables/fetchHistory.js';
-// import { ref } from 'vue';
+import { ref } from 'vue';
 
 export default {
   // components: { LineChart },
@@ -25,6 +25,7 @@ export default {
     },
   },
   setup(props) {
+    const newDate = ref(new Date(props.datePicked).toISOString().slice(0, 10));
     // const chartOptions = reactive({
     //   responsive: true,
     // });
@@ -58,7 +59,7 @@ export default {
     //   return date === 15 && year === 2022;
     // });
 
-    const { result, isLoaded } = useFetchHistory(props.country, props.date);
+    const { result, isLoaded } = useFetchHistory(props.country, newDate.value);
 
     return { result };
   },
