@@ -1,8 +1,7 @@
 <template>
-  <!-- <div>
-    <p>{{ totalCases }}</p>
-    <p>{{ labelsCases }}</p>
-  </div> -->
+  <div>
+    <p>{{ allCases }}</p>
+  </div>
   <Line
     :data="statDetails"
     :options="chartOptions" />
@@ -21,26 +20,26 @@ import {
   PointElement,
   LineElement,
 } from 'chart.js';
+// import { result } from 'lodash';
 
 ChartJS.register(Title, Tooltip, Legend, CategoryScale, LinearScale, PointElement, LineElement);
 
 export default {
-  name: 'LineChart',
   components: { Line },
   props: {
     result: {
       type: Array,
       required: true,
     },
-    resultLength: {
-      type: Number,
-      required: true,
-    },
   },
   setup(props) {
+    const resultLength = computed(function () {
+      return props.result.length;
+    });
+
     const totalCases = computed(function () {
       const totalArray = [];
-      for (let i = 0; i < props.resultLength; i++) {
+      for (let i = 0; i < resultLength.value; i++) {
         totalArray[i] = props.result[i].cases.total;
       }
       return totalArray;
@@ -48,10 +47,18 @@ export default {
 
     const labelsCases = computed(function () {
       const labelsArray = [];
-      for (let i = 0; i < props.resultLength; i++) {
+      for (let i = 0; i < resultLength.value; i++) {
         labelsArray[i] = new Date(Date.parse(props.result[i].time)).toLocaleTimeString();
       }
       return labelsArray;
+    });
+
+    const allCases = computed(function () {
+      const results = labelsCases.value.filter((element) => {
+        var [year, month] = element.split('-');
+        return year === '2022' && month === '01';
+      });
+      return results;
     });
 
     const statDetails = computed(function () {
@@ -85,7 +92,7 @@ export default {
     //   return newArray;
     // });
 
-    return { statDetails, chartOptions };
+    return { allCases, statDetails, chartOptions };
   },
 };
 </script>

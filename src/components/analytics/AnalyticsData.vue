@@ -3,9 +3,7 @@
     <div>
       <p>{{ result }}</p>
     </div>
-    <LineChart
-      :result="result"
-      :result-length="resultLength" />
+    <LineChart :result="result" />
   </div>
 </template>
 
@@ -42,9 +40,9 @@ export default {
     //   return date === 15 && year === 2022;
     // });
 
-    const { result, resultLength } = useFetchHistory(country.value, dateString);
+    const { result } = useFetchHistory(country.value, dateString);
 
-    return { result, resultLength };
+    return { result };
   },
 };
 </script>
