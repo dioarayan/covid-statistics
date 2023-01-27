@@ -1,6 +1,7 @@
 <template>
   <div>
     <p>{{ allCases }}</p>
+    <p>{{ dataCases }}</p>
   </div>
   <Line
     :data="statDetails"
@@ -20,6 +21,7 @@ import {
   PointElement,
   LineElement,
 } from 'chart.js';
+import { result } from 'lodash';
 // import { result } from 'lodash';
 
 ChartJS.register(Title, Tooltip, Legend, CategoryScale, LinearScale, PointElement, LineElement);
@@ -54,11 +56,34 @@ export default {
     });
 
     const allCases = computed(function () {
-      const results = labelsCases.value.filter((element) => {
-        var [year, month] = element.split('-');
-        return year === '2022' && month === '01';
-      });
-      return results;
+      let arrayDates = [];
+      for (let i = 0; i <= 11; i++) {
+        let fetchDate = new Date(
+          Math.max(
+            ...props.result
+              .map((e) => {
+                return new Date(Date.parse(e.time));
+              })
+              .filter((b) => {
+                return b.getFullYear() === 2022 && b.getMonth() === i;
+              })
+          )
+        );
+        arrayDates.push(fetchDate);
+        // console.log(fetchDate);
+      }
+      return arrayDates;
+    });
+
+    const dataCases = computed(function () {
+      let arrayData = [];
+      for (let i = 0; i <= allCases.value.length; i++) {
+        let fetchData = props.result.find(function (e) {
+          return e.time === allCases.value[i];
+        });
+        arrayData.push(fetchData);
+      }
+      return arrayData;
     });
 
     const statDetails = computed(function () {
@@ -70,7 +95,7 @@ export default {
             // backgroundColor: ["#41B883", "#E46651", "#00D8FF"],
             data: totalCases.value,
             borderColor: '#fff',
-            borderWidth: '3',
+            borderWidth: '1',
           },
         ],
       };
@@ -92,7 +117,8 @@ export default {
     //   return newArray;
     // });
 
-    return { allCases, statDetails, chartOptions };
+    console.log(allCases.value);
+    return { allCases, dataCases, statDetails, chartOptions };
   },
 };
 </script>

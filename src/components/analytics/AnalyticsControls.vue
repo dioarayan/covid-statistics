@@ -22,13 +22,16 @@
 </template>
 
 <script>
+import { ref } from 'vue';
 import useFetchCountry from '../../composables/fetchCountry.js';
 
 export default {
   setup() {
+    const country = ref('');
+    const datePicked = ref('');
     const [countries] = useFetchCountry();
 
-    return { countries };
+    return { countries, country, datePicked };
   },
 };
 </script>
