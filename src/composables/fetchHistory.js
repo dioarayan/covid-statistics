@@ -1,15 +1,14 @@
 import { ref } from 'vue';
 import axios from 'axios';
 
-export default function useFetchHistory(country, date) {
+export default function useFetchHistory(country, day) {
   const result = ref(null);
-  const resultLength = ref('');
   const isLoaded = ref(false);
 
   const options = {
     method: 'GET',
     url: 'https://covid-193.p.rapidapi.com/history',
-    params: { country: country, day: date },
+    params: { country: country, day: day },
     headers: {
       'X-RapidAPI-Key': '57b8ce9aedmsh22fe9b1780b95f8p1a76d1jsn23bc3457d222',
       'X-RapidAPI-Host': 'covid-193.p.rapidapi.com',
@@ -21,7 +20,6 @@ export default function useFetchHistory(country, date) {
     .then(function (response) {
       if (response) {
         result.value = response.data.response;
-        resultLength.value = response.data.results;
         isLoaded.value = true;
       }
     })
@@ -39,6 +37,6 @@ export default function useFetchHistory(country, date) {
   //   return newArray;
   // }
 
-  return { result, resultLength, isLoaded };
+  return { result, isLoaded };
 }
 

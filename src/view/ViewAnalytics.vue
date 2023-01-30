@@ -1,38 +1,34 @@
 <template>
   <h1>Analytics</h1>
   <div class="container">
-    <AnalyticsControls />
-    <AnalyticsAll />
-    <!-- <component
-        :is="currentView"
-        :country="country"
-        :date-picked="datePicked"
-        /> -->
+    <AnalyticsControls @select-country="selectCountry" />
+    <AnalyticsAll
+      v-if="isLoaded"
+      :result="result" />
+    <!-- <AnalyticsData /> -->
   </div>
 </template>
 
 <script>
-// import { ref, watch } from 'vue';
+import { ref } from 'vue';
 
 // import AnalyticsData from '../components/analytics/AnalyticsData.vue';
 import AnalyticsAll from '../components/analytics/AnalyticsAll.vue';
 import AnalyticsControls from '../components/analytics/AnalyticsControls.vue';
-
+import useFetchHistory from '../composables/fetchHistory.js';
 export default {
   components: { AnalyticsAll, AnalyticsControls },
   setup() {
-    // const datePicked = ref('');
-    // const country = ref('');
-    // const currentView = ref('AnalyticsAll');
-    // const loadAnalytics = ref(false);
-    // watch([country, datePicked], function () {
-    //   if (country.value !== '' && datePicked.value !== '') {
-    //     currentView.value = 'AnalyticsData';
-    //     console.log(country.value + ' ' + datePicked.value);
-    //   } else {
-    //     currentView.value = 'AnalyticsAll';
-    //   }
-    // });
+    const countryPicked = ref('All');
+
+    function selectCountry(country) {
+      countryPicked.value = country;
+      console.log(countryPicked.value);
+    }
+
+    const { result, isLoaded } = useFetchHistory(countryPicked.value);
+
+    return { result, isLoaded, selectCountry };
   },
 };
 </script>

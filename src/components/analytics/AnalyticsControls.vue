@@ -2,8 +2,10 @@
   <section class="flex justify-center items-center">
     <el-form>
       <el-select
+        @change="$emit('selectCountry', country)"
         v-model="country"
         class="m-2"
+        remote
         filterable
         placeholder="Select Country">
         <el-option
@@ -26,8 +28,9 @@ import { ref } from 'vue';
 import useFetchCountry from '../../composables/fetchCountry.js';
 
 export default {
+  emits: ['selectCountry'],
   setup() {
-    const country = ref('');
+    const country = ref('All');
     const datePicked = ref('');
     const [countries] = useFetchCountry();
 
