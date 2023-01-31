@@ -3,27 +3,30 @@
     <div>
       <p>{{ result }}</p>
     </div>
-    <LineChart :result="result" />
+    <LineChart
+      v-if="isLoaded"
+      :result="result" />
   </div>
 </template>
 
 <script>
 import LineChart from '../analytics/chart/LineChart.vue';
 import useFetchHistory from '../../composables/fetchHistory.js';
-import { ref, watch } from 'vue';
+import { onMounted, ref, watch } from 'vue';
 
 export default {
   components: { LineChart },
   props: {
-    countryPicked: {
-      type: String,
+    result: {
+      type: Array,
       required: true,
-      default: 'All',
     },
   },
   setup(props) {
+    const countryData = ref(null);
     // const newDate = new Date([props.datePicked]);
     // const dateString = new Date(newDate.getTime() - newDate.getTimezoneOffset() * 60000).toISOString().split('T')[0];
+    const { result, isLoaded, loadAPI } = useFetchHistory(props.countryPicked);
 
     function getFullData(array1, array2) {
       let arrayResult = [];
@@ -60,12 +63,14 @@ export default {
       return arrayDates;
     }
 
-    const { result, isLoaded } = useFetchHistory(props.countryPicked);
-    // countryData.value = getFullData(getLatestDataPerMonth(props.result), props.result);
+    countryData.value = getFullData(getLatestDataPerMonth(result), result);
 
+    onMounted(() => {
+      loadAPI(props.countryPicked);
+    });
     // console.log(countryData.value);
 
-    return { result };
+    return { result, isLoaded };
   },
 };
 </script>

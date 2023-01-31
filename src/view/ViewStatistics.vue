@@ -37,7 +37,7 @@
 import StatisticsTable from '../components/statistics/StatisticsTable.vue';
 import { Loading, WarningFilled } from '@element-plus/icons-vue';
 import useFetchData from '../composables/fetchStatistics.js';
-import { ref } from 'vue';
+import { onMounted, ref } from 'vue';
 
 export default {
   components: { StatisticsTable, Loading, WarningFilled },
@@ -46,7 +46,14 @@ export default {
     const load_spinner = ref(true);
     const load_data = ref(false);
 
-    const { allResult, loadedState, loadingState, errorState } = useFetchData(load_spinner.value, load_data.value);
+    const { allResult, loadedState, loadingState, errorState, loadAPI } = useFetchData(
+      load_spinner.value,
+      load_data.value
+    );
+
+    onMounted(() => {
+      loadAPI();
+    });
 
     return {
       allResult,
