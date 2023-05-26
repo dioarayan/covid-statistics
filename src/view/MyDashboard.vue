@@ -2,7 +2,7 @@
   <div class="container">
     <div class="h-screen">
       <div class="my-5">
-        <p class="text-3xl">My Dashboard</p>
+        <p class="text-3xl">Dashboard</p>
       </div>
       <el-divider />
       <div class="flex flex-row justify-between my-5">

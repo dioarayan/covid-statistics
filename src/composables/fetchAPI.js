@@ -1,16 +1,16 @@
 import { ref } from 'vue';
 import axios from 'axios';
 
-export default function useFetchData(stateA, stateB) {
+export default function useFetchAPIData(endpoint, x, y) {
   const allResult = ref(null);
-  const loadingState = ref(stateA);
-  const loadedState = ref(stateB);
+  const loadingState = ref(x);
+  const loadedState = ref(y);
   const errorState = ref(null);
 
   function loadAPI() {
     const options = {
       method: 'GET',
-      url: 'https://covid-193.p.rapidapi.com/statistics',
+      url: 'https://covid-193.p.rapidapi.com/' + endpoint,
       headers: {
         'X-RapidAPI-Key': '57b8ce9aedmsh22fe9b1780b95f8p1a76d1jsn23bc3457d222',
         'X-RapidAPI-Host': 'covid-193.p.rapidapi.com',
@@ -20,7 +20,6 @@ export default function useFetchData(stateA, stateB) {
     axios
       .request(options)
       .then(function (response) {
-        console.log('isLoading' + loadingState.value);
         if (response) {
           allResult.value = response.data.response;
           loadedState.value = true;

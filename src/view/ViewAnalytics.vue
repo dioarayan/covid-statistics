@@ -1,71 +1,39 @@
 <template>
   <h1>Analytics</h1>
   <div class="container">
-    <div class="flex justify-center items-center">
-      <el-form>
-        <el-select
-          v-model="country"
-          class="m-2"
-          filterable
-          placeholder="Select Country"
-        >
-          <el-option v-for="country in countries" :value="country">{{
-            country
-          }}</el-option>
-        </el-select>
-        <el-date-picker
-          v-model="datePicked"
-          type="date"
-          placeholder="Pick a day"
-        />
-        <base-button @click="goButton"> Go! </base-button>
-      </el-form>
-    </div>
-    <div class="flex flex-col justify-center items-center">
-      <AnalyticsData
-        v-if="loadAnalytics"
-        :country="country"
-        :date-picked="datePicked"
-      />
-      <div v-else>
-        <h1>Start searching</h1>
-      </div>
-    </div>
+    <section v-if="!state.isLoaded && state.loading">...</section>
+    <section v-else-if="state.isLoaded && !state.loading">
+      <LineChart :result="result" />
+      <!-- <AnalyticsAll :result="result" /> -->
+    </section>
+    <section v-else-if="!state.isLoaded && !state.loading">{{ state.errorMsg }}</section>
+
+    <!-- <AnalyticsData
+      v-else-if="searchingCountry"
+      :country-picked="countryPicked" /> -->
   </div>
 </template>
 
 <script>
-import { ref } from "vue";
-import useFetchCountry from "../composables/fetchCountry.js";
+import { onMounted } from 'vue';
+// import AnalyticsAll from '../components/analytics/AnalyticsAll.vue';
 
-// import AnalyticsData from '../components/analytics/AnalyticsData.vue';
-// import useFetchData from '../composables/fetch.js';
-
+import LineChart from '../components/analytics/chart/LineChart.vue';
+import useFetchHistory from '../composables/fetchHistory.js';
 export default {
+  components: { LineChart },
   setup() {
-    const datePicked = ref("");
-    const country = ref("");
-    const loadAnalytics = ref(false);
-    // const data = reactive({
-    //   labels: ['January', 'February', 'March', 'June'],
-    //   datasets: [
-    //     {
-    //       label: 'Data One',
-    //       backgroundColor: '#f87979',
-    //       data: [24, 31, 14, 3],
-    //     },
-    //   ],
-    // });
+    // const resultFetched = ref(null);
+    // const finalData = ref(null);
 
-    function goButton() {
-      loadAnalytics.value = true;
-      console.log(datePicked.value);
-      console.log(country.value);
-    }
+    const { result, state, requestData } = useFetchHistory('all');
 
-    const [countries] = useFetchCountry();
+    onMounted(() => {
+      requestData();
+    });
 
-    return { countries, country, datePicked, loadAnalytics, goButton };
+    return { result, state };
   },
 };
 </script>
+

@@ -1,18 +1,13 @@
 <template>
-  <div class="flex flex-col">
-    <div>
-      <p>{{ result }}</p>
-    </div>
-    <LineChart
-      v-if="isLoaded"
-      :result="result" />
-  </div>
+  <section class="w-full">
+    <!-- <LineChart :country-data="countryData" /> -->
+    {{ countryData }}
+  </section>
 </template>
 
 <script>
+import { ref } from 'vue';
 import LineChart from '../analytics/chart/LineChart.vue';
-import useFetchHistory from '../../composables/fetchHistory.js';
-import { onMounted, ref, watch } from 'vue';
 
 export default {
   components: { LineChart },
@@ -24,9 +19,7 @@ export default {
   },
   setup(props) {
     const countryData = ref(null);
-    // const newDate = new Date([props.datePicked]);
-    // const dateString = new Date(newDate.getTime() - newDate.getTimezoneOffset() * 60000).toISOString().split('T')[0];
-    const { result, isLoaded, loadAPI } = useFetchHistory(props.countryPicked);
+    // const line = ref(null);
 
     function getFullData(array1, array2) {
       let arrayResult = [];
@@ -63,14 +56,9 @@ export default {
       return arrayDates;
     }
 
-    countryData.value = getFullData(getLatestDataPerMonth(result), result);
+    countryData.value = getFullData(getLatestDataPerMonth(props.result), props.result);
 
-    onMounted(() => {
-      loadAPI(props.countryPicked);
-    });
-    // console.log(countryData.value);
-
-    return { result, isLoaded };
+    return { countryData };
   },
 };
 </script>
