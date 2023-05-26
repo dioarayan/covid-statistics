@@ -1,53 +1,49 @@
 <template>
-  <Line
-    :data="statDetails"
-    :options="chartOptions" />
+  <!-- <Line
+    :data="chartDataComputed"
+    :options="chartOptions" /> -->
 </template>
 
 <script>
-import { ref, computed } from 'vue';
-import { Line } from 'vue-chartjs';
-import {
-  Chart as ChartJS,
-  Title,
-  Tooltip,
-  Legend,
-  CategoryScale,
-  LinearScale,
-  PointElement,
-  LineElement,
-} from 'chart.js';
+import { computed, reactive } from 'vue';
+// import useGetChartData from '../../../composables/getChartData.js';
+// import { Line } from 'vue-chartjs';
+// import {
+//   Chart as ChartJS,
+//   Title,
+//   Tooltip,
+//   Legend,
+//   CategoryScale,
+//   LinearScale,
+//   PointElement,
+//   LineElement,
+// } from 'chart.js';
 
-ChartJS.register(Title, Tooltip, Legend, CategoryScale, LinearScale, PointElement, LineElement);
+// ChartJS.register(Title, Tooltip, Legend, CategoryScale, LinearScale, PointElement, LineElement);
 
 export default {
-  components: { Line },
+  // components: { Line },
   props: {
-    countryData: {
+    result: {
       type: Array,
       required: true,
     },
   },
   setup(props) {
-    const countryData = ref(props.countryData);
+    // console.log(props.result);
+
+    // const { resultFetched } = useGetChartData(props.result);
+
     const totalCases = computed(function () {
       const totalArray = [];
-      for (let i = 0; i < countryData.value.length; i++) {
-        totalArray[i] = countryData.value[i].cases.total;
+      for (let i = 0; i < resultFetched.length; i++) {
+        totalArray[i] = resultFetched[i].cases.total;
       }
       return totalArray;
     });
 
-    // const labelsCases = computed(function () {
-    //   const labelsArray = [];
-    //   for (let i = 0; i < result.value.length; i++) {
-    //     labelsArray[i] = new Date(Date.parse(result.value[i].time)).toLocaleTimeString();
-    //   }
-    //   return labelsArray;
-    // });
-
-    const statDetails = computed(function () {
-      const chartData = {
+    const chartDataComputed = computed(function () {
+      const chartData = reactive({
         labels: [
           'January',
           'February',
@@ -72,7 +68,7 @@ export default {
             borderWidth: '1',
           },
         ],
-      };
+      });
       return chartData;
     });
 
@@ -81,7 +77,16 @@ export default {
       maintainAspectRatio: true,
     };
 
-    return { statDetails, chartOptions };
+    function getLatestDataPerDay(array) {
+      const result = array.map((e) => {
+        return new Date(Date.parse(e.time));
+      });
+      console.log(result);
+    }
+
+    getLatestDataPerDay(props.result);
+
+    // return { chartDataComputed, chartOptions };
   },
 };
 </script>

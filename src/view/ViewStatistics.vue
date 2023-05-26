@@ -1,6 +1,6 @@
 <template>
   <h1 class="text-3xl">Statistics</h1>
-  <base-message v-if="loadingState && !loadedState">
+  <base-message v-if="!loadedState">
     <template #icon>
       <base-icon
         size="50"
@@ -13,7 +13,7 @@
     </template>
   </base-message>
 
-  <div v-else-if="loadedState && !loadingState">
+  <div v-else-if="loadedState">
     <statistics-table :all-result="allResult"></statistics-table>
   </div>
   <base-message v-else-if="!loadedState && !loadingState">
@@ -36,17 +36,19 @@
 <script>
 import StatisticsTable from '../components/statistics/StatisticsTable.vue';
 import { Loading, WarningFilled } from '@element-plus/icons-vue';
-import useFetchData from '../composables/fetchStatistics.js';
+import useFetchAPIData from '../composables/fetchAPI.js';
 import { onMounted, ref } from 'vue';
 
 export default {
   components: { StatisticsTable, Loading, WarningFilled },
 
   setup() {
-    const load_spinner = ref(true);
+    const load_spinner = ref(false);
     const load_data = ref(false);
+    const endpoint = ref('statistics');
 
-    const { allResult, loadedState, loadingState, errorState, loadAPI } = useFetchData(
+    const { allResult, loadedState, loadingState, errorState, loadAPI } = useFetchAPIData(
+      endpoint.value,
       load_spinner.value,
       load_data.value
     );

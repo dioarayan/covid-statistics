@@ -1,17 +1,21 @@
-import { ref, unref } from 'vue';
+import { ref, reactive } from 'vue';
 import axios from 'axios';
 
-export default function useFetchHistory(country, day) {
+export default function useFetchHistory(country) {
+  const state = reactive({
+    loading: true,
+    isLoaded: false,
+    errorMsg: null,
+  });
   const result = ref(null);
-  const isLoaded = ref(false);
-  const error = ref(null);
 
-  function loadAPI(country) {
-    let data = new Array();
+  function requestData() {
+    state.loading = true;
+
     const options = {
       method: 'GET',
       url: 'https://covid-193.p.rapidapi.com/history',
-      params: { country: country, day: day },
+      params: { country: country },
       headers: {
         'X-RapidAPI-Key': '57b8ce9aedmsh22fe9b1780b95f8p1a76d1jsn23bc3457d222',
         'X-RapidAPI-Host': 'covid-193.p.rapidapi.com',
@@ -21,20 +25,22 @@ export default function useFetchHistory(country, day) {
     axios
       .request(options)
       .then(function (response) {
-        if (response) {
-          // data.push(response.data.response);
-          response.data.response.map((element) => data.push(element));
-          isLoaded.value = true;
-          console.log(data);
-        }
+        result.value = response.data.response;
+        state.loading = false;
+        state.isLoaded = true;
+        console.log(result.value);
       })
       .catch(function (error) {
-        console.error(error);
-        error.value = error;
+        state.loading = false;
+        state.isLoaded = false;
+        state.errorMsg = error.message;
       });
-    return data;
   }
 
-  return { result, isLoaded, loadAPI };
+  return {
+    result,
+    state,
+    requestData,
+  };
 }
 

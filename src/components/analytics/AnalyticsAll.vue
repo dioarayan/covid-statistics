@@ -1,8 +1,7 @@
 <template>
   <section class="w-full">
-    <LineChart
-      ref="line"
-      :country-data="countryData" />
+    <!-- <LineChart :country-data="countryData" /> -->
+    {{ countryData }}
   </section>
 </template>
 
@@ -13,14 +12,14 @@ import LineChart from '../analytics/chart/LineChart.vue';
 export default {
   components: { LineChart },
   props: {
-    resultFetched: {
+    result: {
       type: Array,
       required: true,
     },
   },
   setup(props) {
     const countryData = ref(null);
-    const line = ref(null);
+    // const line = ref(null);
 
     function getFullData(array1, array2) {
       let arrayResult = [];
@@ -57,9 +56,9 @@ export default {
       return arrayDates;
     }
 
-    countryData.value = getFullData(getLatestDataPerMonth(props.resultFetched), props.resultFetched);
+    countryData.value = getFullData(getLatestDataPerMonth(props.result), props.result);
 
-    return { countryData, line };
+    return { countryData };
   },
 };
 </script>

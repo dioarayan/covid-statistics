@@ -1,11 +1,13 @@
 <template>
   <h1>Analytics</h1>
   <div class="container">
-    <AnalyticsControls @select-country="selectCountry" />
-    <AnalyticsAll
-      v-if="isLoaded"
-      :searching-country="searchingCountry"
-      :result-fetched="resultFetched" />
+    <section v-if="!state.isLoaded && state.loading">...</section>
+    <section v-else-if="state.isLoaded && !state.loading">
+      <LineChart :result="result" />
+      <!-- <AnalyticsAll :result="result" /> -->
+    </section>
+    <section v-else-if="!state.isLoaded && !state.loading">{{ state.errorMsg }}</section>
+
     <!-- <AnalyticsData
       v-else-if="searchingCountry"
       :country-picked="countryPicked" /> -->
@@ -13,33 +15,24 @@
 </template>
 
 <script>
-import { ref, onMounted } from 'vue';
+import { onMounted } from 'vue';
+// import AnalyticsAll from '../components/analytics/AnalyticsAll.vue';
 
-// import AnalyticsData from '../components/analytics/AnalyticsData.vue';
-import AnalyticsAll from '../components/analytics/AnalyticsAll.vue';
-import AnalyticsControls from '../components/analytics/AnalyticsControls.vue';
+import LineChart from '../components/analytics/chart/LineChart.vue';
 import useFetchHistory from '../composables/fetchHistory.js';
 export default {
-  components: { AnalyticsAll, AnalyticsControls },
+  components: { LineChart },
   setup() {
-    const countryPicked = ref('All');
-    const resultFetched = ref(null);
-    // const searchingCountry = ref(false);
+    // const resultFetched = ref(null);
+    // const finalData = ref(null);
 
-    function selectCountry(country) {
-      searchingCountry.value = true;
-      countryPicked.value = country;
-      console.log(countryPicked.value);
-      resultFetched.value = loadAPI(countryPicked.value);
-    }
-
-    const { isLoaded, loadAPI } = useFetchHistory(countryPicked.value);
+    const { result, state, requestData } = useFetchHistory('all');
 
     onMounted(() => {
-      resultFetched.value = loadAPI(countryPicked.value);
+      requestData();
     });
 
-    return { resultFetched, isLoaded, searchingCountry, countryPicked, selectCountry };
+    return { result, state };
   },
 };
 </script>
