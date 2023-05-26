@@ -52,7 +52,7 @@
                 </div>
                 <div class="w-full">
                   <p class="float-left">Critical Cases:</p>
-                  <p class="text-right">{{ props.row.cases.new }}</p>
+                  <p class="text-right">{{ props.row.cases.critical }}</p>
                 </div>
                 <div class="w-full">
                   <p class="float-left">Recovered:</p>

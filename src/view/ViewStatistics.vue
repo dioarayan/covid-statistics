@@ -1,5 +1,6 @@
 <template>
   <h1 class="text-3xl">Statistics</h1>
+  <el-divider />
   <base-message v-if="!loadedState">
     <template #icon>
       <base-icon
