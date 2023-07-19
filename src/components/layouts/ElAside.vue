@@ -5,7 +5,7 @@ import { List } from '@element-plus/icons-vue';
     <el-menu :ellipsis="false">
       <section class="p-4">
         <img
-          src="../../../images/icon.png"
+          src="/public/images/icon.png"
           class="w-9 inline-block mr-2" />
         Covid-19 Statistics
       </section>
