@@ -12,8 +12,8 @@ export default function useFetchAPIData(endpoint, x, y) {
       method: 'GET',
       url: 'https://covid-193.p.rapidapi.com/' + endpoint,
       headers: {
-        'X-RapidAPI-Key': '57b8ce9aedmsh22fe9b1780b95f8p1a76d1jsn23bc3457d222',
-        'X-RapidAPI-Host': 'covid-193.p.rapidapi.com',
+        'X-RapidAPI-Key': import.meta.env.VITE_API_KEY,
+        'X-RapidAPI-Host': import.meta.env.VITE_API_HOST,
       },
     };
 

@@ -3,7 +3,7 @@
     <div class="flex flex-col items-center mt-12">
       <div>
         <img
-          src="../../../images/icon.png"
+          src="/public/images/icon.png"
           class="w-32 inline-block mr-2" />
       </div>
       <div class="m-4">
