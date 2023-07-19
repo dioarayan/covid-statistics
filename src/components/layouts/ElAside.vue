@@ -10,23 +10,13 @@ import { List } from '@element-plus/icons-vue';
         Covid-19 Statistics
       </section>
       <router-link to="/">
-        <el-menu-item index="0">
-          <base-icon><Grid /></base-icon>Dashboard
+        <el-menu-item index="3">
+          <base-icon><HomeFilled /></base-icon>Home
         </el-menu-item>
       </router-link>
       <router-link to="/countries">
         <el-menu-item index="2">
           <base-icon><MapLocation /></base-icon>Countries
-        </el-menu-item>
-      </router-link>
-      <router-link to="/statistics">
-        <el-menu-item index="3">
-          <base-icon><List /></base-icon>Statistics
-        </el-menu-item>
-      </router-link>
-      <router-link to="/analytics">
-        <el-menu-item index="4">
-          <base-icon><TrendCharts /></base-icon>Analytics
         </el-menu-item>
       </router-link>
       <router-link to="/about">
@@ -42,11 +32,11 @@ import { List } from '@element-plus/icons-vue';
 </template>
 
 <script>
-import { Grid, MapLocation, Avatar, List, TrendCharts } from '@element-plus/icons-vue';
+import { Grid, MapLocation, Avatar, HomeFilled, TrendCharts } from '@element-plus/icons-vue';
 export default {
-  components: { Grid, MapLocation, List, TrendCharts, Avatar },
+  components: { Grid, MapLocation, HomeFilled, TrendCharts, Avatar },
   setup() {
-    return { Grid, MapLocation, List, TrendCharts, Avatar };
+    return { Grid, MapLocation, HomeFilled, TrendCharts, Avatar };
   },
 };
 </script>
