@@ -28,8 +28,8 @@ jobs:
           echo VITE_API_HOST=$VITE_API_HOST >> .env
           cat .env
         env:
-          VITE_API_KEY: ${{ secrets.VITE_API_KEY }}
-          VITE_API_HOST: ${{ secrets.VITE_API_HOST }}
+          VITE_API_KEY: ${{ vars.VITE_API_KEY }}
+          VITE_API_HOST: ${{ vars.VITE_API_HOST }}
       - name: Build app
         run: |
           npm install
