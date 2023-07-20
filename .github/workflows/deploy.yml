@@ -28,6 +28,12 @@ jobs:
         env:
           VITE_API_KEY: ${{ secrets.VITE_API_KEY }}
           VITE_API_HOST: ${{ secrets.VITE_API_HOST }}
+      - name: Create env file
+        run: |
+          touch .env
+          echo VITE_API_KEY=${VITE_API_KEY} >> .env
+          echo VITE_API_HOST=${VITE_API_HOST} >> .env
+          cat .env
       - uses: actions/configure-pages@v2
       - uses: actions/upload-pages-artifact@v1
         with:
