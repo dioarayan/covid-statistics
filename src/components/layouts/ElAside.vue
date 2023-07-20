@@ -1,29 +1,21 @@
-import { List } from '@element-plus/icons-vue';
-
 <template>
   <div class="h-full relative">
-    <el-menu :ellipsis="false">
+    <el-menu :ellipsis="false" router :default-active="route.path">
       <section class="p-4">
         <img
           src="/public/images/icon.png"
           class="w-9 inline-block mr-2" />
         Covid-19 Statistics
       </section>
-      <router-link to="/">
-        <el-menu-item index="3">
-          <base-icon><HomeFilled /></base-icon>Home
-        </el-menu-item>
-      </router-link>
-      <router-link to="/countries">
-        <el-menu-item index="2">
-          <base-icon><MapLocation /></base-icon>Countries
-        </el-menu-item>
-      </router-link>
-      <router-link to="/about">
-        <el-menu-item index="5">
-          <base-icon><Avatar /></base-icon> About
-        </el-menu-item>
-      </router-link>
+      <el-menu-item index="/" route="/">
+        <base-icon><HomeFilled /></base-icon>Home
+      </el-menu-item>
+      <el-menu-item index="/countries" route="/countries">
+        <base-icon><MapLocation /></base-icon>Countries
+      </el-menu-item>
+      <el-menu-item index="/about" route="/about">
+        <base-icon><Avatar /></base-icon> About
+      </el-menu-item>
     </el-menu>
     <section class="absolute bottom-0 p-8">
       <p class="text-center">DioArayan</p>
@@ -33,10 +25,12 @@ import { List } from '@element-plus/icons-vue';
 
 <script>
 import { Grid, MapLocation, Avatar, HomeFilled, TrendCharts } from '@element-plus/icons-vue';
+import { useRoute } from 'vue-router';
 export default {
   components: { Grid, MapLocation, HomeFilled, TrendCharts, Avatar },
   setup() {
-    return { Grid, MapLocation, HomeFilled, TrendCharts, Avatar };
+    const route = useRoute()
+    return { Grid, MapLocation, HomeFilled, TrendCharts, Avatar, route };
   },
 };
 </script>

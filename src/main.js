@@ -20,4 +20,4 @@ app.component('base-button', BaseButton);
 app.component('base-message', BaseMessage);
 app.component('base-icon', BaseIcon);
 app.mount('#app');
-
+console.log(import.meta.env)
