@@ -27,13 +27,16 @@ jobs:
           echo VITE_API_KEY=$VITE_API_KEY >> .env
           echo VITE_API_HOST=$VITE_API_HOST >> .env
           cat .env
-        env:
-          VITE_API_KEY: ${{ vars.VITE_API_KEY }}
-          VITE_API_HOST: ${{ vars.VITE_API_HOST }}
+        # env:
+        #   VITE_API_KEY: ${{ vars.VITE_API_KEY }}
+        #   VITE_API_HOST: ${{ vars.VITE_API_HOST }}
       - name: Build app
         run: |
           npm install
           npm run-script build
+        # env:
+        #   VITE_API_KEY: ${{ secrets.VITE_API_KEY }}
+        #   VITE_API_HOST: ${{ secrets.VITE_API_HOST }}
       - uses: actions/configure-pages@v2
       - uses: actions/upload-pages-artifact@v1
         with:
@@ -41,3 +44,4 @@ jobs:
       - name: Deploy
         id: deployment
         uses: actions/deploy-pages@v1
+
