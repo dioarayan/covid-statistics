@@ -5,7 +5,7 @@ import ViewStatistics from './view/ViewStatistics.vue';
 import ViewAbout from './view/ViewAbout.vue';
 
 const router = createRouter({
-  history: createWebHistory(),
+  history: createWebHistory('/covid-statistics/'),
   routes: [
     { path: '/', component: ViewStatistics },
     { path: '/countries', component: ViewCountries },

@@ -8,6 +8,7 @@ export default function useFetchAPIData(endpoint, x, y) {
   const errorState = ref(null);
 
   function loadAPI() {
+    console.log(import.meta.env.VITE_API_KEY);
     const options = {
       method: 'GET',
       url: 'https://covid-193.p.rapidapi.com/' + endpoint,
