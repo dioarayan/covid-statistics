@@ -10,7 +10,7 @@ import { ElementPlusResolver } from 'unplugin-vue-components/resolvers';
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  base: 'covid-statisticsa',
+  base: '/covid-statistics',
   plugins: [
     vue(),
     AutoImport({
